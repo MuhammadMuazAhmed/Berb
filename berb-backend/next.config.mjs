@@ -1,15 +1,35 @@
+
 /** @type {import('next').NextConfig} */
-export default {
+const nextConfig = {
   poweredByHeader: false,
+
   serverExternalPackages: ["mongoose", "bcryptjs"],
-  async rewrites() {
-    return [{ source: "/admin/login", destination: "/admin-login" }];
+
+  experimental: {
+    webpackMemoryOptimizations: true,
   },
+
+  async rewrites() {
+    return [
+      { source: "/admin/login", destination: "/admin-login" },
+    ];
+  },
+
   async headers() {
-    return [{ source: "/(.*)", headers: [
-      { key: "X-Frame-Options", value: "DENY" },
-      { key: "X-Content-Type-Options", value: "nosniff" },
-      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-    ] }];
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+        ],
+      },
+    ];
   },
 };
+
+export default nextConfig;
