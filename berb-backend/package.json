@@ -1,0 +1,40 @@
+{
+  "name": "berb-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "admin:create": "tsx --env-file=.env scripts/create-admin.ts",
+    "seed:services": "tsx --env-file=.env scripts/seed-services.ts",
+    "notifications:process": "tsx --env-file=.env scripts/process-notifications.ts"
+  },
+  "dependencies": {
+    "@fontsource/stix-two-text": "^5.1.0",
+    "@fontsource/ubuntu": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "server-only": "^0.0.1",
+    "jose": "^5.9.6",
+    "mongoose": "^8.9.0",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.1.0",
+    "tsx": "^4.19.2",
+    "typescript": "~5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

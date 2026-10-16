@@ -1,0 +1,49 @@
+/*
+  Design tokens.
+  Colors #161723 (dark blue), #c6c6c7 (grey) and white are the three palette
+  values published on the reference template's style guide page.
+  Everything else is derived from them (tints / alpha) – no new hues.
+*/
+:root {
+  --color-background: #ffffff;
+  --color-background-alt: #f3f3f4; /* light tint of #c6c6c7 */
+  --color-surface: #ffffff;
+  --color-dark: #161723;
+  --color-dark-raised: #1f2132; /* slightly lifted dark surface */
+  --color-text-primary: #161723;
+  --color-text-secondary: #4d4e5c; /* muted text, passes AA on white */
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #c6c6c7;
+  --color-accent: #c6c6c7;
+  --color-border: #c6c6c7;
+  --color-border-soft: rgba(22, 23, 35, 0.14);
+  --color-button: #161723;
+  --color-button-hover: #2d3047;
+  --color-error: #a3202e;
+  --color-success: #1d6b43;
+
+  /* Typography: fonts used by the reference template (Google Fonts, OFL) */
+  --font-heading: "STIX Two Text", Georgia, "Times New Roman", serif;
+  --font-body: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-body: 1rem;
+  --text-heading: 2rem;
+  --text-xs: var(--text-body);
+  --text-sm: var(--text-body);
+  --text-base: var(--text-body);
+  --text-lg: var(--text-body);
+  --text-h3: var(--text-heading);
+  --text-h2: var(--text-heading);
+  --text-h1: var(--text-heading);
+
+  /* Spacing + layout */
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(4rem, 8vw, 7.5rem);
+  --header-h: 76px;
+  --radius: 4px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration: 0.3s;
+}

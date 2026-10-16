@@ -1,0 +1,64 @@
+/*
+  Design tokens.
+  Colors #161723 (dark blue), #c6c6c7 (grey) and white are the three palette
+  values published on the reference template's style guide page.
+  Everything else is derived from them (tints / alpha) – no new hues.
+*/
+:root {
+  --color-background: #ffffff;
+  --color-background-alt: #f3f3f4; /* light tint of #c6c6c7 */
+  --color-surface: #ffffff;
+  --color-dark: #161723;
+  --color-dark-raised: #1f2132; /* slightly lifted dark surface */
+  --color-text-primary: #161723;
+  --color-text-secondary: #4d4e5c; /* muted text, passes AA on white */
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #c6c6c7;
+  --color-accent: #c6c6c7;
+  --color-border: #c6c6c7;
+  --color-border-soft: rgba(22, 23, 35, 0.14);
+  --color-button: #161723;
+  --color-button-hover: #2d3047;
+  --color-error: #a3202e;
+  --color-success: #1d6b43;
+
+  /* Typography: fonts used by the reference template (Google Fonts, OFL) */
+  --font-heading: "STIX Two Text", Georgia, "Times New Roman", serif;
+  --font-body: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-h3: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-h2: clamp(2rem, 1.4rem + 2.2vw, 3.25rem);
+  --text-h1: clamp(2.5rem, 1.5rem + 4.6vw, 5.5rem);
+
+  /* Spacing + layout */
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --section-y: clamp(4rem, 8vw, 7.5rem);
+  --header-h: 76px;
+  --radius: 4px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration: 0.3s;
+}
+
+:root[data-admin-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #111319;
+  --color-background-alt: #181b23;
+  --color-surface: #20232c;
+  --color-dark-raised: #292d38;
+  --color-text-primary: #f4f5f7;
+  --color-text-secondary: #c2c6d0;
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: #d0d3da;
+  --color-accent: #737988;
+  --color-border: #4b5060;
+  --color-border-soft: rgba(236, 239, 245, 0.16);
+  --color-button: #4659c7;
+  --color-button-hover: #586be0;
+}
