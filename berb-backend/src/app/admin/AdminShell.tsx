@@ -13,6 +13,7 @@ const navigation = [
   { href: "/admin/team", label: "Team", icon: Users },
   { href: "/admin/services", label: "Services", icon: Wrench },
   { href: "/admin/notifications", label: "Notifications", icon: Bell },
+  { href: "/admin/admins", label: "Manage Admins", icon: Users },
 ];
 
 export function AdminShell({ children, name, role }: { children: ReactNode; name: string; role: string }) {
@@ -84,7 +85,9 @@ export function AdminShell({ children, name, role }: { children: ReactNode; name
       <Link className="brand" href="/admin" aria-label="BERB admin overview"><span className="brand-mark" aria-hidden="true"><i /><i /></span><span>BERB</span><span className="brand-caption">OPERATIONS</span></Link>
       <div className="nav-label">Workspace</div>
       <nav className="side-nav">
-        {navigation.map(({ href, label, icon: Icon }) => {
+       {navigation
+           .filter(({ href }) => href !== "/admin/admins" || role === "owner")
+              .map(({ href, label, icon: Icon }) => {
           const active = href === "/admin" ? pathname === href : pathname.startsWith(href);
           return <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => setDrawerOpen(false)}>
             <Icon size={18} strokeWidth={1.8} aria-hidden="true" /><span>{label}</span>{active && <ChevronRight size={15} className="nav-indicator" aria-hidden="true" />}
