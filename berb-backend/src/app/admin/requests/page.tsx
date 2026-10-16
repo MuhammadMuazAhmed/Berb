@@ -15,7 +15,11 @@ export default async function Requests({ searchParams }: { searchParams: Promise
   const sp = Object.fromEntries(Object.entries(params).filter(([, v]) => v !== "" && v !== undefined));
   const p = requestFilterSchema.safeParse(sp), f = p.success ? p.data : requestFilterSchema.parse({});
   const [res, services] = await Promise.all([listRequests(f), Service.find().sort({ name: 1 }).lean()]);
-  const qs = new URLSearchParams(Object.entries(sp).filter(([k]) => k !== "page")).toString();
+  const qs = new URLSearchParams(
+  Object.entries(sp).flatMap(([k, v]): [string, string][] =>
+    k === "page" || v === undefined ? [] : Array.isArray(v) ? v.map((x): [string, string] => [k, x]) : [[k, v]],
+  ),
+).toString();
   type R = { _id: unknown; reference: string; customerName: string; customerEmail: string; status: string; createdAt: Date; requestedStart?: Date; serviceId?: { name: string }; assignedTeamMemberId?: { fullName: string } };
   return <><Head title="Service requests" /><Flash sp={params} />
     <form className="card row" method="get" role="search">

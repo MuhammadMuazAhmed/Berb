@@ -22,7 +22,7 @@ async function runAdminMutation(fn: () => Promise<void>) {
   let result = "Administrator updated";
   try {
     await connectDb();
-    await requireOwner({ write: true });
+    await requireOwner();
     await fn();
     revalidatePath("/admin", "layout");
   } catch (error) {

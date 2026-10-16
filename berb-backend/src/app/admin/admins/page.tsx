@@ -16,7 +16,7 @@ export default async function AdminAccountsPage({ searchParams }: { searchParams
         <div><label htmlFor="admin-name">Name</label><input id="admin-name" name="name" required minLength={2} maxLength={100} /></div>
         <div><label htmlFor="admin-email">Email</label><input id="admin-email" name="email" type="email" required maxLength={200} /></div>
         <div><label htmlFor="admin-password">Temporary password</label><input id="admin-password" name="password" type="password" required minLength={12} maxLength={200} autoComplete="new-password" /></div>
-        <div><label htmlFor="admin-role">Role</label><select id="admin-role" name="role" defaultValue="admin">{managedAdminCreateSchema.shape.role.options.map((role) => <option key={role} value={role}>{role}</option>)}</select></div>
+        <div><label htmlFor="admin-role">Role</label><select id="admin-role" name="role" defaultValue="admin">{managedAdminCreateSchema.shape.role.removeDefault().options.map((role) => <option key={role} value={role}>{role}</option>)}</select></div>
         <SubmitButton className="btn fit" pendingLabel="Creating account...">Create account</SubmitButton>
       </form>
       <p className="muted admin-role-note"><b>Owner:</b> full access and administrator management. <b>Admin:</b> operational read/write access. <b>Viewer:</b> read-only access.</p>

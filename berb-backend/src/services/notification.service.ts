@@ -34,7 +34,7 @@ async function buildEmail(n: { serviceRequestId: unknown; teamMemberId?: unknown
   const d: JobEmailData = {
     type: n.notificationType as Type, memberName: member.fullName, reference: req.reference, service: service?.name ?? "Service", whenLabel: when,
     customerName: req.customerName, customerEmail: req.customerEmail, customerPhone: req.customerPhone ?? undefined,
-    address: [a.line1, [a.postalCode, a.city].filter(Boolean).join(" "), a.country].filter(Boolean).join(", "),
+   address: a ? [a.line1, [a.postalCode, a.city].filter(Boolean).join(" "), a.country].filter(Boolean).join(", ") : "",
     description: req.description, link: `${getEnv().APP_URL}/admin/requests/${req._id}`, note: n.payload?.note,
   };
   return jobEmail(d);

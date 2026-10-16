@@ -2,7 +2,9 @@ import mongoose, { Schema, Types, type Model, type InferSchemaType } from "mongo
 import { STATUSES } from "@/lib/scheduling/status";
 
 const opts = { timestamps: true } as const;
-const m = <T>(name: string, schema: Schema): Model<T> => (mongoose.models[name] as Model<T>) || mongoose.model<T>(name, schema);
+const m = <S extends Schema>(name: string, schema: S): Model<InferSchemaType<S>> =>
+  (mongoose.models[name] as Model<InferSchemaType<S>> | undefined) ??
+  (mongoose.model(name, schema) as unknown as Model<InferSchemaType<S>>);
 
 // ---------- Service ----------
 const serviceSchema = new Schema({
@@ -15,7 +17,7 @@ const serviceSchema = new Schema({
   startingPrice: { type: Number, min: 0 },
   active: { type: Boolean, default: true, index: true },
 }, opts);
-export const Service = m<InferSchemaType<typeof serviceSchema>>("Service", serviceSchema);
+export const Service = m("Service", serviceSchema);
 
 // ---------- TeamMember ----------
 const hmSub = new Schema({ start: String, end: String }, { _id: false });
@@ -32,7 +34,7 @@ const teamSchema = new Schema({
   unavailablePeriods: [new Schema({ start: { type: Date, required: true }, end: { type: Date, required: true }, reason: String }, { _id: true })],
 }, opts);
 teamSchema.index({ serviceIds: 1, active: 1 });
-export const TeamMember = m<InferSchemaType<typeof teamSchema>>("TeamMember", teamSchema);
+export const TeamMember = m("TeamMember", teamSchema);
 
 // ---------- ServiceRequest ----------
 const historySub = new Schema({
@@ -70,7 +72,7 @@ requestSchema.index({ requestedStart: 1 });
 // Serves the availability overlap query (member + blocking status + time window)
 requestSchema.index({ assignedTeamMemberId: 1, status: 1, scheduledStart: 1, blockedEnd: 1 });
 requestSchema.index({ scheduledStart: 1, status: 1 });
-export const ServiceRequest = m<InferSchemaType<typeof requestSchema>>("ServiceRequest", requestSchema);
+export const ServiceRequest = m("ServiceRequest", requestSchema);
 
 // ---------- AdminUser ----------
 const adminSchema = new Schema({
@@ -79,7 +81,7 @@ const adminSchema = new Schema({
   role: { type: String, enum: ["owner", "admin", "viewer"], default: "admin" },
   active: { type: Boolean, default: true },
 }, opts);
-export const AdminUser = m<InferSchemaType<typeof adminSchema>>("AdminUser", adminSchema);
+export const AdminUser = m("AdminUser", adminSchema);
 
 // A unique singleton document permanently closes public initial-owner setup.
 const adminInitializationSchema = new Schema({
@@ -87,7 +89,7 @@ const adminInitializationSchema = new Schema({
   ownerId: { type: Schema.Types.ObjectId, ref: "AdminUser", required: true },
   completedAt: { type: Date, required: true },
 }, { versionKey: false });
-export const AdminInitialization = m<{ _id: string; ownerId: Types.ObjectId; completedAt: Date }>("AdminInitialization", adminInitializationSchema);
+export const AdminInitialization = m("AdminInitialization", adminInitializationSchema);
 
 // ---------- Notification (transactional outbox) ----------
 const notificationSchema = new Schema({
@@ -103,7 +105,7 @@ const notificationSchema = new Schema({
   nextAttemptAt: { type: Date, default: Date.now }, lockedUntil: Date, sentAt: Date,
 }, opts);
 notificationSchema.index({ status: 1, nextAttemptAt: 1 });
-export const Notification = m<InferSchemaType<typeof notificationSchema>>("Notification", notificationSchema);
+export const Notification = m("Notification", notificationSchema);
 
 // ---------- ScheduleLock (distributed per-member mutex) ----------
 const lockSchema = new Schema({
@@ -111,11 +113,11 @@ const lockSchema = new Schema({
   owner: { type: String, required: true },
   expiresAt: { type: Date, required: true, index: { expireAfterSeconds: 120 } }, // cleanup of abandoned locks
 }, { versionKey: false });
-export const ScheduleLock = m<{ _id: Types.ObjectId; owner: string; expiresAt: Date }>("ScheduleLock", lockSchema);
+export const ScheduleLock = m("ScheduleLock", lockSchema);
 
 // ---------- RateLimit (Mongo-backed so it works across instances) ----------
 const rateSchema = new Schema({
   key: { type: String, required: true, unique: true }, count: { type: Number, default: 0 },
   expiresAt: { type: Date, required: true, index: { expireAfterSeconds: 0 } },
 }, { versionKey: false });
-export const RateLimit = m<{ key: string; count: number; expiresAt: Date }>("RateLimit", rateSchema);
+export const RateLimit = m("RateLimit", rateSchema);
