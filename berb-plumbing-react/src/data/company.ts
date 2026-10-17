@@ -1,10 +1,10 @@
 /** Company details taken from the reference website. */
 export const company = {
   name: "BERB",
-  addressLine: "Berbstr. 1, Cologne, Germany",
+  addressLine: "I-10/4, Islamabad, Pakistan",
   email: "berb@gmail.com",
   phoneDisplay: "0221/12 12 23 15",
-  phoneHref: "tel:+4922112122315",
+  phoneHref: "tel:+922112122315",
   founded: 2020,
   tagline:
     "Berb is a master business, in the 1st generation, which was founded in 2020 in Cologne.",

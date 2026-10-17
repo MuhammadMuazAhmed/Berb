@@ -33,7 +33,7 @@ export default function ServicesSection({ onSelectService }: ServicesSectionProp
         <div className="services-header">
           <div className="services-header-copy">
             <p className="eyebrow services-eyebrow">— Our Services</p>
-            <h2 id="services-title">Keeping London Warm</h2>
+            <h2 id="services-title">Keeping Islamabad Warm</h2>
           </div>
 
           <p className="services-intro">
