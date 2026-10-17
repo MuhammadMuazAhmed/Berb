@@ -4,7 +4,9 @@
  * No secrets are ever exposed — the env var is public by design.
  */
 
-const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "";
+const BASE = (
+  (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? ""
+).replace(/\/+$/, "");
 
 // ─── Response shapes ────────────────────────────────────────────────────────
 
@@ -39,7 +41,10 @@ export interface ServiceRequestResponse {
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
+  const normalizedPath = `/${path.replace(/^\/+/, "")}`;
+  const url = BASE ? `${BASE}${normalizedPath}` : normalizedPath;
+
+  const res = await fetch(url, {
     headers: { "Content-Type": "application/json" },
     ...init,
   });
