@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types, type Model, type InferSchemaType } from "mongoose";
+import mongoose, { Schema, type Model, type InferSchemaType } from "mongoose";
 import { STATUSES } from "@/lib/scheduling/status";
 
 const opts = { timestamps: true } as const;
